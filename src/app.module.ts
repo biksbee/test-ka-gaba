@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ActivationEntity } from './activation/activation.entity';
+import { ActivationModule } from './activation/activation.module';
+import { PromoCodeEntity } from './promo-code/promo-code.entity';
+import { PromoCodeModule } from './promo-code/promo-code.module';
 
 @Module({
   imports: [
@@ -18,12 +22,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
         entities: [
-
+          PromoCodeEntity,
+          ActivationEntity,
         ],
         logging: true,
         synchronize: false,
       })
     }),
+    PromoCodeModule,
+    ActivationModule
   ],
   controllers: [],
   providers: [],
