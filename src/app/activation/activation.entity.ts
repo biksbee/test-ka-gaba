@@ -5,10 +5,11 @@ import {
   ManyToOne,
   Unique,
   CreateDateColumn,
+  JoinColumn
 } from 'typeorm';
 import { PromoCodeEntity } from '../promo-code/promo-code.entity';
 
-@Entity()
+@Entity('activation')
 @Unique(['email', 'promoCode'])
 export class ActivationEntity {
   @PrimaryGeneratedColumn()
@@ -18,8 +19,9 @@ export class ActivationEntity {
   email: string;
 
   @ManyToOne(() => PromoCodeEntity, promo => promo.activations)
+  @JoinColumn({ name: 'promoCodeId'})
   promoCode: PromoCodeEntity;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 }

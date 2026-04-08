@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ActivationEntity } from './activation/activation.entity';
-import { ActivationModule } from './activation/activation.module';
-import { PromoCodeEntity } from './promo-code/promo-code.entity';
-import { PromoCodeModule } from './promo-code/promo-code.module';
+import { ActivationEntity } from './app/activation/activation.entity';
+import { ActivationModule } from './app/activation/activation.module';
+import { PromoCodeEntity } from './app/promo-code/promo-code.entity';
+import { PromoCodeModule } from './app/promo-code/promo-code.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PromoCodeModule } from './promo-code/promo-code.module';
         synchronize: false,
       })
     }),
+    ScheduleModule.forRoot(),
     PromoCodeModule,
     ActivationModule
   ],
